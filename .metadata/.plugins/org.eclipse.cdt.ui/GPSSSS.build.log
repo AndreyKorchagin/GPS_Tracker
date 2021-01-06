@@ -1,0 +1,30 @@
+03:23:05 **** Incremental Build of configuration Debug for project GPSSSS ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F100xB -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f1xx_hal_msp.d" -MT"Core/Src/stm32f1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F100xB -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f1xx_it.d" -MT"Core/Src/stm32f1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32f1xx_it.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F100xB -DDEBUG -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Inc/main.h:1:0,
+                 from ../Core/Src/stm32f1xx_hal_msp.c:23:
+../Core/Inc/Configuration.h:3:10: fatal error: Font.h: No such file or directory
+ #include "Font.h"
+          ^~~~~~~~
+compilation terminated.
+In file included from ../Core/Inc/main.h:1:0,
+                 from ../Core/Src/stm32f1xx_it.c:22:
+../Core/Inc/Configuration.h:3:10: fatal error: Font.h: No such file or directory
+ #include "Font.h"
+          ^~~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:37: Core/Src/stm32f1xx_it.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Core/Src/subdir.mk:35: Core/Src/stm32f1xx_hal_msp.o] Error 1
+In file included from ../Core/Src/main.c:1:0:
+../Core/Inc/configuration.h:3:10: fatal error: Font.h: No such file or directory
+ #include "Font.h"
+          ^~~~~~~~
+compilation terminated.
+make: *** [Core/Src/subdir.mk:33: Core/Src/main.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+
+03:23:05 Build Failed. 7 errors, 0 warnings. (took 188ms)
+

@@ -1,0 +1,749 @@
+/* USER CODE BEGIN Header */
+/**
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "cmsis_os.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+#define RX_BUFF_SIZE 255
+
+#define UART_DMA_BUFFER_SIZE 128
+#define PARSER_MESSAGE_LIST_SIZE 2
+#define PARSER_MESSAGE_SIZE 128
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+SPI_HandleTypeDef hspi2;
+
+UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
+DMA_HandleTypeDef hdma_usart1_tx;
+
+osThreadId defaultTaskHandle;
+osThreadId defaultUARTParsHandle;
+osThreadId NMEAParseHandle;
+/* USER CODE BEGIN PV */
+static uint8_t buffer[UART_DMA_BUFFER_SIZE];
+static uint8_t buffer_msg[PARSER_MESSAGE_SIZE];
+static uint8_t msg_list[PARSER_MESSAGE_LIST_SIZE][PARSER_MESSAGE_SIZE];
+
+char RxBuffer[RX_BUFF_SIZE];
+int test = 0;
+
+char Time[12] = ""; //время
+char Status[2] = ""; //валидность
+char SLatitude[16] = "";  //Латитуда
+char NS[3] = "";                          //
+char SLongitude[12] = "";         //Лонгитуда
+char EW[3] = "";                          //
+char CourseTrue[10] = "";                 // курс
+char Data[12] = "";                               //Дата
+char SatCount[4] = "";                    //используемых спутников
+char AltitudaMSL[12] = "";            //высота
+char ViewSat[4];   //
+char COG[8] = "";                 //
+char COGstat[4] = "";             //
+char Speed[8] = "";                       //скорость
+char SpeedAlt[8] = "";    //
+char UNUSED[32] = "";                //мусорка, тут все данные, которые не нужны
+char Knot[8] = "";
+char PositionMode[3] = "";
+char *const RMC[] = { Time, Status, SLatitude, NS, SLongitude, EW, Speed,
+		CourseTrue, Data, UNUSED, UNUSED, PositionMode };
+
+char *const GGA[] = { UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, SatCount,
+		UNUSED, AltitudaMSL, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED,
+		UNUSED };
+
+char *const GSV[] = { UNUSED, UNUSED, ViewSat, UNUSED, UNUSED, UNUSED, UNUSED,
+		UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED, UNUSED,
+		UNUSED, UNUSED, UNUSED, UNUSED, UNUSED };
+
+char *const VTG[] = { COG, COGstat, UNUSED, UNUSED, Knot, UNUSED, Speed, UNUSED,
+		UNUSED, UNUSED };
+
+unsigned char GLONAS_COUNT = 0;
+unsigned char GPS_COUNT = 0;
+volatile char DataDone = 0;
+unsigned char DataValid = 0;
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
+static void MX_SPI2_Init(void);
+static void MX_USART1_UART_Init(void);
+void StartDefaultTask(void const *argument);
+void StartUARTParser(void const *argument);
+void StartNMEAParse(void const *argument);
+
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+ * @brief  The application entry point.
+ * @retval int
+ */
+int main(void) {
+	/* USER CODE BEGIN 1 */
+	/* USER CODE END 1 */
+
+	/* MCU Configuration--------------------------------------------------------*/
+
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	HAL_Init();
+
+	/* USER CODE BEGIN Init */
+
+	/* USER CODE END Init */
+
+	/* Configure the system clock */
+	SystemClock_Config();
+
+	/* USER CODE BEGIN SysInit */
+
+	/* USER CODE END SysInit */
+
+	/* Initialize all configured peripherals */
+	MX_GPIO_Init();
+	MX_DMA_Init();
+	MX_SPI2_Init();
+	MX_USART1_UART_Init();
+	/* USER CODE BEGIN 2 */
+	HAL_Delay(2000);
+
+	HAL_UART_Transmit(&huart1,
+			"$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n", 51, 100);
+	HAL_Delay(500);
+
+//	HAL_UART_Receive_DMA(&huart1, answer, 17);
+//	if (strncmp(answer, "$PMTK001,314,3*36", 17) == 0){
+//		GPIOC->ODR ^= GPIO_ODR_ODR9;
+//	}
+
+	HAL_UART_Transmit(&huart1, "$PMTK102*31\r\n", 13, 30);
+	HAL_Delay(500);
+
+	/* USER CODE END 2 */
+
+	/* USER CODE BEGIN RTOS_MUTEX */
+	/* add mutexes, ... */
+	/* USER CODE END RTOS_MUTEX */
+
+	/* USER CODE BEGIN RTOS_SEMAPHORES */
+	/* add semaphores, ... */
+	/* USER CODE END RTOS_SEMAPHORES */
+
+	/* USER CODE BEGIN RTOS_TIMERS */
+	/* start timers, add new ones, ... */
+	/* USER CODE END RTOS_TIMERS */
+
+	/* USER CODE BEGIN RTOS_QUEUES */
+	/* add queues, ... */
+	/* USER CODE END RTOS_QUEUES */
+
+	/* Create the thread(s) */
+	/* definition and creation of defaultTask */
+	osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+	defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+	/* definition and creation of defaultUARTPars */
+	osThreadDef(defaultUARTPars, StartUARTParser, osPriorityLow, 0, 128);
+	defaultUARTParsHandle = osThreadCreate(osThread(defaultUARTPars), NULL);
+
+	/* definition and creation of NMEAParse */
+	osThreadDef(NMEAParse, StartNMEAParse, osPriorityNormal, 0, 128);
+	NMEAParseHandle = osThreadCreate(osThread(NMEAParse), NULL);
+
+	/* USER CODE BEGIN RTOS_THREADS */
+	/* add threads, ... */
+	/* USER CODE END RTOS_THREADS */
+
+	/* Start scheduler */
+	osKernelStart();
+
+	/* We should never get here as control is now taken by the scheduler */
+	/* Infinite loop */
+	/* USER CODE BEGIN WHILE */
+	while (1) {
+		/* USER CODE END WHILE */
+
+		/* USER CODE BEGIN 3 */
+
+//		TxStr("$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n");
+//		TxStr("$PMTK102*31");
+//		GPIOC->ODR ^= GPIO_ODR_ODR9;
+//		test++;
+//		HAL_UART_Receive_DMA(&huart1, (uint8_t*) RxBuffer, RX_BUFF_SIZE);
+//				for(int i = 0; i < 800000)
+	}
+	/* USER CODE END 3 */
+}
+
+/**
+ * @brief System Clock Configuration
+ * @retval None
+ */
+void SystemClock_Config(void) {
+	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+
+	/** Initializes the RCC Oscillators according to the specified parameters
+	 * in the RCC_OscInitTypeDef structure.
+	 */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+	RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL3;
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+		Error_Handler();
+	}
+	/** Initializes the CPU, AHB and APB buses clocks
+	 */
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
+		Error_Handler();
+	}
+}
+
+/**
+ * @brief SPI2 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_SPI2_Init(void) {
+
+	/* USER CODE BEGIN SPI2_Init 0 */
+
+	/* USER CODE END SPI2_Init 0 */
+
+	/* USER CODE BEGIN SPI2_Init 1 */
+
+	/* USER CODE END SPI2_Init 1 */
+	/* SPI2 parameter configuration*/
+	hspi2.Instance = SPI2;
+	hspi2.Init.Mode = SPI_MODE_MASTER;
+	hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+	hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+	hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+	hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
+	hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
+	hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+	hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+	hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+	hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+	hspi2.Init.CRCPolynomial = 10;
+	if (HAL_SPI_Init(&hspi2) != HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN SPI2_Init 2 */
+
+	/* USER CODE END SPI2_Init 2 */
+
+}
+
+/**
+ * @brief USART1 Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_USART1_UART_Init(void) {
+
+	/* USER CODE BEGIN USART1_Init 0 */
+
+	/* USER CODE END USART1_Init 0 */
+
+	/* USER CODE BEGIN USART1_Init 1 */
+
+	/* USER CODE END USART1_Init 1 */
+	huart1.Instance = USART1;
+	huart1.Init.BaudRate = 9600;
+	huart1.Init.WordLength = UART_WORDLENGTH_8B;
+	huart1.Init.StopBits = UART_STOPBITS_1;
+	huart1.Init.Parity = UART_PARITY_NONE;
+	huart1.Init.Mode = UART_MODE_TX_RX;
+	huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+	if (HAL_UART_Init(&huart1) != HAL_OK) {
+		Error_Handler();
+	}
+	/* USER CODE BEGIN USART1_Init 2 */
+
+	/* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+ * Enable DMA controller clock
+ */
+static void MX_DMA_Init(void) {
+
+	/* DMA controller clock enable */
+	__HAL_RCC_DMA1_CLK_ENABLE();
+
+	/* DMA interrupt init */
+	/* DMA1_Channel4_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
+	/* DMA1_Channel5_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
+
+}
+
+/**
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
+static void MX_GPIO_Init(void) {
+	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8 | GPIO_PIN_9, GPIO_PIN_RESET);
+
+	/*Configure GPIO pins : PC8 PC9 */
+	GPIO_InitStruct.Pin = GPIO_PIN_8 | GPIO_PIN_9;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+}
+
+/* USER CODE BEGIN 4 */
+void Parser(unsigned char data) {
+	static unsigned char ByteCount = 0xff;
+	static unsigned int MsgType;
+	static char *MsgTxt = (char*) &MsgType;
+	static unsigned char ComaPoint = 0xff;
+	static unsigned char CharPoint = 0;
+	if (data == '$') {
+		ByteCount = 0;
+		ComaPoint = 0xff;
+		MsgTxt = (char*) &MsgType;
+		return;
+	} //ждем начала стрки
+	if (ByteCount == 0xff)
+		return;                                                               //
+	ByteCount++;
+	if (ByteCount <= 1)
+		return;                                                         //
+	if (ByteCount < 6 && ByteCount > 1)            //берем 4 символа заголовка
+			{
+		*MsgTxt = data; //и делаем из него число
+		MsgTxt++;
+		return;
+	}
+//
+	switch (MsgType) {
+	case 0x434D5250:                             //GPRMC
+	case 0x434D524E:                             //GNRMC
+		if (data == ',') {
+			ComaPoint++;
+			CharPoint = 0;
+			RMC[ComaPoint][0] = 0;
+			return;
+		}
+		if (data == '*') {
+			MsgType = 0;
+			return;
+		}
+		RMC[ComaPoint][CharPoint++] = data;
+		RMC[ComaPoint][CharPoint] = 0;
+		return;
+	case 0x41474750:                             //PGGA
+	case 0x4147474e:                             //NGGA
+		if (data == ',') {
+			ComaPoint++;
+			CharPoint = 0;
+			GGA[ComaPoint][0] = 0;
+			return;
+		}
+		if (data == '*') {
+			MsgType = 0;
+			return;
+		}
+		GGA[ComaPoint][CharPoint++] = data;
+		GGA[ComaPoint][CharPoint] = 0;
+		return;
+	case 0x47545650:             //PVTG
+		if (data == ',') {
+			ComaPoint++;
+			CharPoint = 0;
+			VTG[ComaPoint][0] = 0;
+			return;
+		}
+		if (data == '*') {
+			return;
+		}
+		VTG[ComaPoint][CharPoint++] = data;
+		VTG[ComaPoint][CharPoint] = 0;
+		return;
+	case 0x4754564e:             //NVTG
+		if (data == ',') {
+			ComaPoint++;
+			CharPoint = 0;
+			VTG[ComaPoint][0] = 0;
+			return;
+		}
+		if (data == '*') {
+			return;
+		}
+		VTG[ComaPoint][CharPoint++] = data;
+		VTG[ComaPoint][CharPoint] = 0;
+		return;
+	case 0x56534750:             //PGSV
+		if (data == ',') {
+			ComaPoint++;
+			CharPoint = 0;
+			GSV[ComaPoint][0] = 0;
+			return;
+		}
+		if (data == '*') {
+//			GPS_COUNT = AsciiToInt(ViewSat);
+			MsgType = 0;
+			return;
+		}
+		GSV[ComaPoint][CharPoint++] = data;
+		GSV[ComaPoint][CharPoint] = 0;
+		return;
+	case 0x5653474c:             //LGSV
+		if (data == ',') {
+			ComaPoint++;
+			CharPoint = 0;
+			GSV[ComaPoint][0] = 0;
+			return;
+		}
+		if (data == '*') {
+//			GLONAS_COUNT = AsciiToInt(ViewSat);
+			MsgType = 0;
+			return;
+		}
+		GSV[ComaPoint][CharPoint++] = data;
+		GSV[ComaPoint][CharPoint] = 0;
+		return;
+	default:
+		ByteCount = 0xff;
+		break;
+	}
+	ByteCount = 0xff;
+}
+
+void UARTParser(int start_dma, int stop_dma){
+
+//	size_t dma_head = 0, dma_tail = 0;
+	size_t cur_msg_sz = 0;
+	size_t cur_msg = 0;
+	uint8_t found = 0;
+	uint8_t start = 0;
+
+	for (register size_t i = start_dma; i < stop_dma; i++) {
+		if (start == 0 && buffer[i] == '$') {
+			start = 1;
+		}
+
+		found = (start == 1 && buffer[i] == '\r') ? 1 :
+				(start == 1 && buffer[i] == '\n') ? 2 : 0;
+
+		if (start == 1) {
+			buffer_msg[cur_msg_sz++] = buffer[i];
+		}
+
+		if (found == 2) {
+			if (strncmp(buffer_msg, "$GPRMC", 6) == 0) {
+				cur_msg = 0;
+			}
+			memset(msg_list[cur_msg], 0, PARSER_MESSAGE_SIZE);
+			strncpy(msg_list[cur_msg], buffer_msg, strlen(buffer_msg));
+			memset(buffer_msg, 0, PARSER_MESSAGE_SIZE);
+
+			cur_msg =
+					cur_msg == PARSER_MESSAGE_LIST_SIZE - 1 ?
+							0 : cur_msg + 1;
+
+			cur_msg_sz = 0;
+			start = 0;
+		}
+	}
+}
+
+/* USER CODE END 4 */
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+ * @brief  Function implementing the defaultTask thread.
+ * @param  argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void const *argument) {
+	/* USER CODE BEGIN 5 */
+	/* Infinite loop */
+	for (;;) {
+//		GPIOC->ODR ^= GPIO_ODR_ODR9;
+//		HAL_UART_Receive_DMA(&huart1, buffer, UART_DMA_BUFFER_SIZE);
+		test++;
+		osDelay(20);
+	}
+	/* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartUARTParser */
+/**
+ * @brief Function implementing the defaultUARTPars thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartUARTParser */
+void StartUARTParser(void const *argument) {
+	/* USER CODE BEGIN StartUARTParser */
+	/* Infinite loop */
+//	size_t *dma_head = (size_t*)malloc(sizeof(size_t));
+//	size_t *dma_tail = (size_t*)malloc(sizeof(size_t));
+
+//	*dma_head = 0;
+//	*dma_tail = 0;
+	size_t dma_head = 0;
+	size_t dma_tail = 0;
+//	size_t cur_msg_sz = 0;
+//	size_t cur_msg = 0;
+//	uint8_t found = 0;
+//	uint8_t start = 0;
+
+	HAL_UART_Receive_DMA(&huart1, buffer, UART_DMA_BUFFER_SIZE);
+
+	for (;;) {
+		GPIOC->ODR ^= GPIO_ODR_ODR9;
+		do {
+			__disable_irq();
+			dma_tail = UART_DMA_BUFFER_SIZE - huart1.hdmarx->Instance->CNDTR;
+			__enable_irq();
+
+			if (dma_tail != dma_head) {
+				if (dma_head < dma_tail) {
+					UARTParser(dma_head, dma_tail);
+//					for (register size_t i = dma_head; i < dma_tail; i++) {
+//						if (start == 0 && buffer[i] == '$') {
+//							start = 1;
+//						}
+//
+//						found = (start == 1 && buffer[i] == '\r') ? 1 :
+//								(start == 1 && buffer[i] == '\n') ? 2 : 0;
+//
+//						if (start == 1) {
+//							buffer_msg[cur_msg_sz++] = buffer[i];
+//						}
+//
+//						if (found == 2) {
+//							if (strncmp(buffer_msg, "$GPRMC", 6) == 0) {
+//								cur_msg = 0;
+//							}
+//							memset(msg_list[cur_msg], 0, PARSER_MESSAGE_SIZE);
+//							strncpy(msg_list[cur_msg], buffer_msg,
+//									strlen(buffer_msg));
+//							memset(buffer_msg, 0, PARSER_MESSAGE_SIZE);
+//
+//							cur_msg =
+//									cur_msg == PARSER_MESSAGE_LIST_SIZE - 1 ?
+//											0 : cur_msg + 1;
+//
+//							cur_msg_sz = 0;
+//							start = 0;
+//						}
+//					}
+				} else {
+					UARTParser(dma_head, UART_DMA_BUFFER_SIZE);
+//					for (register size_t i = dma_head; i < UART_DMA_BUFFER_SIZE;
+//							i++) {
+//						if (start == 0 && buffer[i] == '$') {
+//							start = 1;
+//						}
+//
+//						found = (start == 1 && buffer[i] == '\r') ? 1 :
+//								(start == 1 && buffer[i] == '\n') ? 2 : 0;
+//
+//						if (start == 1) {
+//							buffer_msg[cur_msg_sz++] = buffer[i];
+//						}
+//
+//						if (found == 2) {
+//							if (strncmp(buffer_msg, "$GPRMC", 6) == 0) {
+//								cur_msg = 0;
+//							}
+//							memset(msg_list[cur_msg], 0, PARSER_MESSAGE_SIZE);
+//							strncpy(msg_list[cur_msg], buffer_msg,
+//									strlen(buffer_msg));
+//							memset(buffer_msg, 0, PARSER_MESSAGE_SIZE);
+//
+//							cur_msg =
+//									cur_msg == PARSER_MESSAGE_LIST_SIZE - 1 ?
+//											0 : cur_msg + 1;
+//
+//							cur_msg_sz = 0;
+//							start = 0;
+//						}
+//					}
+					UARTParser(0, dma_tail);
+//					for (register size_t i = 0; i < dma_tail; i++) {
+//						if (start == 0 && buffer[i] == '$') {
+//							start = 1;
+//						}
+//
+//						found = (start == 1 && buffer[i] == '\r') ? 1 :
+//								(start == 1 && buffer[i] == '\n') ? 2 : 0;
+//
+//						if (start == 1) {
+//							buffer_msg[cur_msg_sz++] = buffer[i];
+//						}
+//
+//						if (found == 2) {
+//							if (strncmp(buffer_msg, "$GPRMC", 6) == 0) {
+//								cur_msg = 0;
+//							}
+//							memset(msg_list[cur_msg], 0, PARSER_MESSAGE_SIZE);
+//							strncpy(msg_list[cur_msg], buffer_msg,
+//									strlen(buffer_msg));
+//							memset(buffer_msg, 0, PARSER_MESSAGE_SIZE);
+//
+//							cur_msg =
+//									cur_msg == PARSER_MESSAGE_LIST_SIZE - 1 ?
+//											0 : cur_msg + 1;
+//
+//							cur_msg_sz = 0;
+//							start = 0;
+//						}
+//					}
+				}
+				dma_head = dma_tail;
+			}
+		} while (dma_head
+				!= (UART_DMA_BUFFER_SIZE - huart1.hdmarx->Instance->CNDTR));
+		osDelay(500); // this should be the minimum time difference between each frame
+	}
+	/* USER CODE END StartUARTParser */
+}
+
+/* USER CODE BEGIN Header_StartNMEAParse */
+/**
+ * @brief Function implementing the NMEAParse thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartNMEAParse */
+void StartNMEAParse(void const *argument) {
+	/* USER CODE BEGIN StartNMEAParse */
+	/* Infinite loop */
+	for (;;) {
+		for (uint8_t i = 0; i < strlen(msg_list[0]); i++) {
+			Parser(msg_list[0][i]);
+		}
+		osDelay(250);
+	}
+	/* USER CODE END StartNMEAParse */
+}
+
+/**
+ * @brief  Period elapsed callback in non blocking mode
+ * @note   This function is called  when TIM7 interrupt took place, inside
+ * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+ * a global variable "uwTick" used as application time base.
+ * @param  htim : TIM handle
+ * @retval None
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	/* USER CODE BEGIN Callback 0 */
+
+	/* USER CODE END Callback 0 */
+	if (htim->Instance == TIM7) {
+		HAL_IncTick();
+	}
+	/* USER CODE BEGIN Callback 1 */
+
+	/* USER CODE END Callback 1 */
+}
+
+/**
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+void Error_Handler(void) {
+	/* USER CODE BEGIN Error_Handler_Debug */
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (1) {
+	}
+	/* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

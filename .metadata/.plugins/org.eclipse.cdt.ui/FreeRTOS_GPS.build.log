@@ -1,0 +1,364 @@
+03:23:04 **** Incremental Build of configuration Debug for project FreeRTOS_GPS ****
+make -j7 all 
+arm-none-eabi-gcc "../FreeRTOS/src/croutine.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/croutine.d" -MT"FreeRTOS/src/croutine.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/croutine.o"
+arm-none-eabi-gcc "../FreeRTOS/src/event_groups.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/event_groups.d" -MT"FreeRTOS/src/event_groups.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/event_groups.o"
+arm-none-eabi-gcc "../FreeRTOS/src/heap_1.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/heap_1.d" -MT"FreeRTOS/src/heap_1.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/heap_1.o"
+arm-none-eabi-gcc "../FreeRTOS/src/list.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/list.d" -MT"FreeRTOS/src/list.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/list.o"
+arm-none-eabi-gcc "../FreeRTOS/src/port.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/port.d" -MT"FreeRTOS/src/port.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/port.o"
+arm-none-eabi-gcc "../FreeRTOS/src/queue.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/queue.d" -MT"FreeRTOS/src/queue.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/queue.o"
+arm-none-eabi-gcc "../FreeRTOS/src/tasks.c" -mcpu=cortex-m3 -std=gnu11 -g3 -c -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/CMSIS/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/Core/inc" -I"/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"FreeRTOS/src/tasks.d" -MT"FreeRTOS/src/tasks.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "FreeRTOS/src/tasks.o"
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/croutine.c:27:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/port.c:32:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+make: *** [FreeRTOS/src/subdir.mk:39: FreeRTOS/src/croutine.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/port.c:32:
+../FreeRTOS/src/port.c: In function 'prvTaskExitError':
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:106:55: warning: implicit declaration of function 'vPortRaiseBASEPRI' [-Wimplicit-function-declaration]
+     #define portDISABLE_INTERRUPTS()                  vPortRaiseBASEPRI()
+                                                       ^
+../FreeRTOS/src/port.c:205:5: note: in expansion of macro 'portDISABLE_INTERRUPTS'
+     portDISABLE_INTERRUPTS();
+     ^~~~~~~~~~~~~~~~~~~~~~
+../FreeRTOS/src/port.c: At top level:
+../FreeRTOS/src/port.c:213:7: error: expected '(' before 'void'
+ __asm void vPortSVCHandler( void )
+       ^~~~
+../FreeRTOS/src/port.c:224:13: error: stray '#' in program
+     mov r0, # 0
+             ^
+../FreeRTOS/src/port.c:226:14: error: stray '#' in program
+     orr r14, # 0xd
+              ^
+../FreeRTOS/src/port.c:405:13: error: stray '#' in program
+     mov r0, #configMAX_SYSCALL_INTERRUPT_PRIORITY
+             ^
+../FreeRTOS/src/port.c:410:13: error: stray '#' in program
+     mov r0, #0
+             ^
+../FreeRTOS/src/port.c:123:13: warning: 'prvStartFirstTask' declared 'static' but never defined [-Wunused-function]
+ static void prvStartFirstTask( void );
+             ^~~~~~~~~~~~~~~~~
+../FreeRTOS/src/port.c:134:20: warning: 'uxCriticalNesting' defined but not used [-Wunused-variable]
+ static UBaseType_t uxCriticalNesting = 0xaaaaaaaa;
+                    ^~~~~~~~~~~~~~~~~
+make: *** [FreeRTOS/src/subdir.mk:47: FreeRTOS/src/port.o] Error 1
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/list.c:35:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/event_groups.c:36:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/heap_1.c:42:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+make: *** [FreeRTOS/src/subdir.mk:45: FreeRTOS/src/list.o] Error 1
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/queue.c:35:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/event_groups.c:36:
+../FreeRTOS/src/event_groups.c: In function 'xEventGroupSync':
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:91:9: warning: implicit declaration of function '__dsb'; did you mean '__used'? [-Wimplicit-function-declaration]
+         __dsb( portSY_FULL_READ_WRITE );                           \
+         ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:782:37: note: in expansion of macro 'portYIELD'
+     #define portYIELD_WITHIN_API    portYIELD
+                                     ^~~~~~~~~
+../FreeRTOS/src/event_groups.c:259:13: note: in expansion of macro 'portYIELD_WITHIN_API'
+             portYIELD_WITHIN_API();
+             ^~~~~~~~~~~~~~~~~~~~
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/tasks.c:37:
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:168:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:181:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortRaiseBASEPRI( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:198:29: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+     static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )
+                             ^~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:206:26: error: stray '#' in program
+             msr basepri, # 0
+                          ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:212:38: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'ulPortRaiseBASEPRI'
+     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
+                                      ^~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:163:37: error: unknown type name '__forceinline'
+         #define portFORCE_INLINE    __forceinline
+                                     ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:12: note: in expansion of macro 'portFORCE_INLINE'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+            ^~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:232:40: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'xPortIsInsideInterrupt'
+     static portFORCE_INLINE BaseType_t xPortIsInsideInterrupt( void )
+                                        ^~~~~~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:92:9: warning: implicit declaration of function '__isb'; did you mean '__itoa'? [-Wimplicit-function-declaration]
+         __isb( portSY_FULL_READ_WRITE );                           \
+         ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:782:37: note: in expansion of macro 'portYIELD'
+     #define portYIELD_WITHIN_API    portYIELD
+                                     ^~~~~~~~~
+../FreeRTOS/src/event_groups.c:259:13: note: in expansion of macro 'portYIELD_WITHIN_API'
+             portYIELD_WITHIN_API();
+             ^~~~~~~~~~~~~~~~~~~~
+make: *** [FreeRTOS/src/subdir.mk:43: FreeRTOS/src/heap_1.o] Error 1
+In file included from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portable.h:51:0,
+                 from /Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:63,
+                 from ../FreeRTOS/src/queue.c:35:
+../FreeRTOS/src/queue.c: In function 'xQueueGenericReset':
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:91:9: warning: implicit declaration of function '__dsb'; did you mean '__used'? [-Wimplicit-function-declaration]
+         __dsb( portSY_FULL_READ_WRITE );                           \
+         ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:782:37: note: in expansion of macro 'portYIELD'
+     #define portYIELD_WITHIN_API    portYIELD
+                                     ^~~~~~~~~
+../FreeRTOS/src/queue.c:90:49: note: in expansion of macro 'portYIELD_WITHIN_API'
+     #define queueYIELD_IF_USING_PREEMPTION()    portYIELD_WITHIN_API()
+                                                 ^~~~~~~~~~~~~~~~~~~~
+../FreeRTOS/src/queue.c:291:21: note: in expansion of macro 'queueYIELD_IF_USING_PREEMPTION'
+                     queueYIELD_IF_USING_PREEMPTION();
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../FreeRTOS/src/event_groups.c: In function 'xEventGroupGetBitsFromISR':
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:110:55: warning: implicit declaration of function 'ulPortRaiseBASEPRI' [-Wimplicit-function-declaration]
+     #define portSET_INTERRUPT_MASK_FROM_ISR()         ulPortRaiseBASEPRI()
+                                                       ^
+../FreeRTOS/src/event_groups.c:521:30: note: in expansion of macro 'portSET_INTERRUPT_MASK_FROM_ISR'
+     uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:92:9: warning: implicit declaration of function '__isb'; did you mean '__itoa'? [-Wimplicit-function-declaration]
+         __isb( portSY_FULL_READ_WRITE );                           \
+         ^
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/FreeRTOS.h:782:37: note: in expansion of macro 'portYIELD'
+     #define portYIELD_WITHIN_API    portYIELD
+                                     ^~~~~~~~~
+../FreeRTOS/src/queue.c:90:49: note: in expansion of macro 'portYIELD_WITHIN_API'
+     #define queueYIELD_IF_USING_PREEMPTION()    portYIELD_WITHIN_API()
+                                                 ^~~~~~~~~~~~~~~~~~~~
+../FreeRTOS/src/queue.c:291:21: note: in expansion of macro 'queueYIELD_IF_USING_PREEMPTION'
+                     queueYIELD_IF_USING_PREEMPTION();
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../FreeRTOS/src/tasks.c:40:10: fatal error: stack_macros.h: No such file or directory
+ #include "stack_macros.h"
+          ^~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [FreeRTOS/src/subdir.mk:51: FreeRTOS/src/tasks.o] Error 1
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:111:55: warning: implicit declaration of function 'vPortSetBASEPRI' [-Wimplicit-function-declaration]
+     #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )    vPortSetBASEPRI( x )
+                                                       ^
+../FreeRTOS/src/event_groups.c:525:5: note: in expansion of macro 'portCLEAR_INTERRUPT_MASK_FROM_ISR'
+     portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+     ^
+../FreeRTOS/src/queue.c: In function 'xQueueGenericSendFromISR':
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:110:55: warning: implicit declaration of function 'ulPortRaiseBASEPRI' [-Wimplicit-function-declaration]
+     #define portSET_INTERRUPT_MASK_FROM_ISR()         ulPortRaiseBASEPRI()
+                                                       ^
+../FreeRTOS/src/queue.c:1017:30: note: in expansion of macro 'portSET_INTERRUPT_MASK_FROM_ISR'
+     uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
+                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [FreeRTOS/src/subdir.mk:41: FreeRTOS/src/event_groups.o] Error 1
+/Users/andreykorchagin/Desktop/gps/FreeRTOS_GPS/FreeRTOS/inc/portmacro.h:111:55: warning: implicit declaration of function 'vPortSetBASEPRI' [-Wimplicit-function-declaration]
+     #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )    vPortSetBASEPRI( x )
+                                                       ^
+../FreeRTOS/src/queue.c:1144:5: note: in expansion of macro 'portCLEAR_INTERRUPT_MASK_FROM_ISR'
+     portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
+     ^
+make: *** [FreeRTOS/src/subdir.mk:49: FreeRTOS/src/queue.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+
+03:23:04 Build Failed. 70 errors, 11 warnings. (took 233ms)
+

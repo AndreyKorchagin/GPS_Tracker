@@ -1,0 +1,10 @@
+03:23:05 **** Incremental Build of configuration Debug for project GPS_FreeRTOS ****
+make -j7 all 
+arm-none-eabi-size   GPS_FreeRTOS.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10332	     24	   5648	  16004	   3e84	GPS_FreeRTOS.elf
+Finished building: default.size.stdout
+ 
+
+03:23:05 Build Finished. 0 errors, 0 warnings. (took 78ms)
+
